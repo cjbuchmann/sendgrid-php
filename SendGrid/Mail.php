@@ -2,6 +2,8 @@
 
 namespace SendGrid;
 
+require_once "AppFilters.php";
+
 class Mail
 {
   
@@ -17,11 +19,28 @@ class Mail
 
   protected $use_headers;
 
+  protected $apps;
+
   public function __construct()
   {
-    
+    $this->apps = new AppFilters($this);
   }
   
+  /**
+   * __get
+   * we'll use this method to allow calling protected paramaters as accessors only
+   * eg. $mail->apps instead of $mail->getApps().
+   */
+  public function __get($object)
+  {
+    if (isset($this->$object))
+    {
+      return $this->$object;
+    }
+    
+    throw new Exception("Object or method " . $object . "not found in Mail.");
+  }
+
   /**
    * _removeFromList
    * Given a list of key/value pairs, removes the associated keys
