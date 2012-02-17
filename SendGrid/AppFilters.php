@@ -22,6 +22,17 @@ class AppFilters
   {
     $this->mail = $mail;
   }
+
+  /**
+   * end
+   * return the Mail object, so that
+   * the mail object can further be modified
+   */
+  public function end()
+  {
+    return $this->mail;
+  }
+
   /**
    * disableGravater
    * disables the gravatar app
